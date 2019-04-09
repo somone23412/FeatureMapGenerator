@@ -20,18 +20,22 @@ public:
 
 	std::vector<float> getMeanValue() const;
 	float getScale() const;
+	std::vector<cv::Mat> getFeatureMaps() const;
 
-	int generateFace(cv::Mat img, cv::Mat &dst);
-	int generateFace(std::string imgPath, cv::Mat &dst);
+	std::vector<cv::Mat> generateFace(cv::Mat img, std::vector<std::string> &layerNames);
+	std::vector<cv::Mat> generateFace(std::string imgPath, std::vector<std::string> &layerNames);
 
 private:
-	cv::Mat transToMat(float feat[], int length);
+	cv::Mat transToMat(float* feat, int length, caffe::Blob<float> *layer);
 
 private:
 	caffe::Net<float> *net;
-	std::vector<cv::Mat> featureMaps;
+	caffe::Blob<float> *input_layer;
+
 	float scale;
 	std::vector<float> meanValue;
 
+	std::vector<std::string> layerNames;
+	std::vector<cv::Mat> featureMaps;
 };
 

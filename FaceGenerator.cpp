@@ -5,11 +5,14 @@
 
 
 #define FGDEBUG
+//#define SHOW_FEATURE
 
 
 FaceGenerator::FaceGenerator(std::string modelFile, std::string trainedFile) {
 	this->net = new caffe::Net<float>(modelFile, caffe::TEST);
 	this->net->CopyTrainedLayersFrom(trainedFile);
+
+	this->input_layer = this->net->input_blobs()[0];
 
 	this->scale = 0.0078125;
 	this->meanValue = { 127.5, 127.5, 127.5 };
@@ -21,10 +24,9 @@ FaceGenerator::~FaceGenerator() {
 }
 
 
-int FaceGenerator::generateFace(cv::Mat img, cv::Mat &dst) {
-
-	caffe::Blob<float> *input_layer = this->net->input_blobs()[0];
-	caffe::Blob<float> *out_layer = this->net->output_blobs()[0];
+std::vector<cv::Mat> FaceGenerator::generateFace(cv::Mat img, std::vector<std::string> &layerNames) {
+	//clean featureMaps
+	this->featureMaps.clear();
 
 	//set Params
 	caffe::TransformationParameter tp;
@@ -32,82 +34,81 @@ int FaceGenerator::generateFace(cv::Mat img, cv::Mat &dst) {
 	tp.add_mean_value(this->meanValue[0]);
 	tp.add_mean_value(this->meanValue[1]);
 	tp.add_mean_value(this->meanValue[2]);
-	
 
 	//trans Mat to Caffe-Need-Type (#define USE_OPENCV)
 	caffe::DataTransformer<float> dt(tp, caffe::Phase::TEST);
 	cv::Mat tImg;
-	//resize to input layer Size
+	//resize to input layer size
 	cv::resize(img, tImg, cv::Size(input_layer->width(), input_layer->height()));
 	dt.Transform(tImg, input_layer);
 	
 	//feature extract
 	this->net->ForwardFrom(0);
 
-	//record result
-	float *feat = new float[out_layer->channels()];
-	const float *begin = out_layer->cpu_data();
-	const float *end = out_layer->cpu_data() + out_layer->channels();
-	::memcpy(feat, begin, sizeof(float) * out_layer->channels());
+	//trans each layer's feature to Mat
+	for (int i = 0; i < layerNames.size(); i++) {
+		caffe::Blob<float> *tmpLayer = net->blob_by_name(layerNames[i]).get();
+		const float *begin = tmpLayer->cpu_data();
+		const int length = tmpLayer->channels() * tmpLayer->width() * tmpLayer->height();
+		float *feat = new float[length];
 
 #ifdef FGDEBUG
-
-	//print feature
-	for (int i = 0; i < out_layer->channels(); i++) {
-		std::cout << i << ":" << feat[i] << " ";
-		if (0 == (i + 1) % 5 || out_layer->channels() - 1 == i) {
-			std::cout << std::endl;
-		}
-	}
-
+		std::cout << "layer" << " : " << i << std::endl;
+		std::cout << "channels" << " : " << tmpLayer->channels() << std::endl;
+		std::cout << "width" << " : " << tmpLayer->width() << std::endl;
+		std::cout << "height" << " : " << tmpLayer->height() << std::endl;
+		std::cout << "data length" << " : " << length << std::endl;
 #endif
 
-	//trans result to Mat
-	dst = transToMat(feat, out_layer->channels());
+		const float *end = tmpLayer->cpu_data() + length;
+		::memcpy(feat, begin, sizeof(float) * length);
 
-	delete feat;
+#ifdef SHOW_FEATURE
+		//print feature
+		for (int i = 0; i < length; i++) {
+			std::cout << i << ":" << feat[i] << " ";
+			if (0 == (i + 1) % 5 || length - 1 == i) {
+				std::cout << std::endl;
+			}
+		}
+#endif
 
-	//return 1 if failed to trans result to Mat
-	if ((dst.size <= 0) || (dst.rows <= 0))
-		return 1;
-	return 0;
+		//trans result to Mat
+		cv::Mat dst = transToMat(feat, length, tmpLayer);
+		this->featureMaps.push_back(dst);
+		delete feat;
+	}
+	return this->featureMaps;
 }
 
 
-int FaceGenerator::generateFace(std::string imgPath, cv::Mat &dst){
+std::vector<cv::Mat> FaceGenerator::generateFace(std::string imgPath, std::vector<std::string> &layerNames){
 	cv::Mat img = cv::imread(imgPath);
-	return this->generateFace(img, dst);
+	return this->generateFace(img, layerNames);
 }
 
 
-cv::Mat FaceGenerator::transToMat(float* feat, int length) {
+cv::Mat FaceGenerator::transToMat(float* feat, int length, caffe::Blob<float> *layer) {
 
+	//trans float32* to Mat
+	//data index in memeory : (n * K + k) * H + h) * W + w
+	//n : img numbers; k : channels; h : height, w:width;
+	//if channels > 3 then set K = 3
+	int K = layer->channels() > 3 ? 3 : layer->channels();
+	int H = layer->height();
+	int W = layer->width();
 
-	//trans float32[][] to Mat
-	int h = 224;
-	int w = 224;
+	cv::Mat res = cv::Mat::zeros(H, W, CV_8UC3);
 
-	cv::Mat res = cv::Mat::zeros(h, w, CV_8UC3);
-
-#ifdef FGDEBUG
-
-	//for example, 512 = 16 * 32 here
-	h = 16;
-	w = 32;
-
-	for (int i = 0; i < h; i++) {
-		for (int j = 0; j < w; j++) {
-			int val = (int)(*(feat + i * 16 + j) * 72.5 + 125.0);
-			//std::cout << "[" << i << "," << j << "] "<< val << std::endl;
-			res.at<cv::Vec3b>(i, j)[0] = 0;
-			res.at<cv::Vec3b>(i, j)[1] = val;
-			res.at<cv::Vec3b>(i, j)[2] = 0;
+	for (int k = 0; k < K; k++){
+		for (int h = 0; h < H; h++) {
+			for (int w = 0; w < W; w++) {
+				//trans float to 0-255
+				int val = (int)(*(feat + (k * H + h) * W + w) * 72.5 + 125.0);
+				res.at<cv::Vec3b>(h, w)[k] = val;
+			}
 		}
 	}
-
-#endif
-
-
 
 	return res;
 }
@@ -130,4 +131,8 @@ std::vector<float> FaceGenerator::getMeanValue() const {
 
 float FaceGenerator::getScale() const {
 	return this->scale;
+}
+
+std::vector<cv::Mat> FaceGenerator::getFeatureMaps() const {
+	return this->featureMaps;
 }
