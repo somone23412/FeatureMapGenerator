@@ -11,6 +11,8 @@ code example:
 
 	...
 	
+	FaceGenerator *faceGenerator = new FaceGenerator("model.prototxt", "model.caffemodel");
+	
 	//read img
 	cv::Mat faceImg, genImg, genImg2;
 	faceImg = cv::imread("faceimg/face.jpg");

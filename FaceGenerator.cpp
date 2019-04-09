@@ -37,6 +37,7 @@ int FaceGenerator::generateFace(cv::Mat img, cv::Mat &dst) {
 	//trans Mat to Caffe-Need-Type (#define USE_OPENCV)
 	caffe::DataTransformer<float> dt(tp, caffe::Phase::TEST);
 	cv::Mat tImg;
+	//resize to input layer Size
 	cv::resize(img, tImg, cv::Size(input_layer->width(), input_layer->height()));
 	dt.Transform(tImg, input_layer);
 	

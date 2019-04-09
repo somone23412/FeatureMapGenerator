@@ -30,7 +30,7 @@ private:
 private:
 	caffe::Net<float> *net;
 	std::vector<cv::Mat> featureMaps;
-    float scale;
+	float scale;
 	std::vector<float> meanValue;
 
 };
