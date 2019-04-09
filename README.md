@@ -11,29 +11,24 @@ code example:
 
 	...
 	
-	FaceGenerator *faceGenerator = new FaceGenerator("model.prototxt", "model.caffemodel");
+	//set up faceGenerator
+	FaceGenerator *faceGenerator = new FaceGenerator("model/model_v2-r50-symbol.prototxt", "model/model_v2-r50-symbol.caffemodel");
+
+	std::vector<std::string> layerNames = { "data", "stage3_unit1_conv1", "stage3_unit1_conv2" };
 	
-	//read img
-	cv::Mat faceImg, genImg, genImg2;
+	//generate img via cv::Mat
+	cv::Mat faceImg, genImg;
 	faceImg = cv::imread("faceimg/face.jpg");
-	assert((faceImg.cols > 0) && (faceImg.rows > 0));
 	cv::imshow("faceImg", faceImg);
 
-	//generate img via cv::Mat
-	if (0 == faceGenerator->generateFace(faceImg, genImg)){
-		std::cout << "Generate via cv::Mat successed!" << std::endl;
-		imshow("genImg", genImg);
-	}else {
-		std::cout << "Generate via cv::Mat failed!" << std::endl;
-	}
+	genImg = faceGenerator->generateFace(faceImg, layerNames)[0];
+	imshow("genImg", genImg);
 
 	//generate img via abs-path
-	if (0 == faceGenerator->generateFace("faceimg/face2.jpg", genImg2)){
-		std::cout << "Generate via abs-path successed!" << std::endl;
-		imshow("genImg2", genImg2);
-	}
-	else {
-		std::cout << "Generate via abs-path failed!" << std::endl;
+	std::vector<cv::Mat> genImgs;
+	genImgs = faceGenerator->generateFace("faceimg/face2.jpg", layerNames);
+	for (int i = 0; i < genImgs.size(); i++) {
+		imshow("gen " + layerNames[i], genImgs[i]);
 	}
 	
 	...
@@ -41,3 +36,6 @@ code example:
 	
 ```
 
+result:
+
+![featureMap](https://github.com/somone23412/FaceGenerator/blob/master/image/featureMap.jpg)
