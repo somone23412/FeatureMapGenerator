@@ -8,7 +8,7 @@ By using this class you can see the **feature map** of each layer in the neural 
 
 ![featureMap](https://github.com/somone23412/FaceGenerator/blob/master/image/featureMap.jpg)
 
-If you are interested in what this neural network has done, you can take a look at the model author's [matlab code](https://github.com/Yijunmaverick/GenerativeFaceCompletion/tree/master/matlab/FaceCompletion_testing), I just reproduce it in c++.
+If you are interested in what this neural network has done, you can take a look at the model author's [matlab code](https://github.com/Yijunmaverick/GenerativeFaceCompletion/tree/master/matlab/FaceCompletion_testing). This example is mainly used to show what the generated feature map looks like.
 
 # How to get started
 
