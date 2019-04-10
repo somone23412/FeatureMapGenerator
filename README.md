@@ -1,7 +1,5 @@
 # FaceGenerator
 
-## what is this
-
 + A c++ class for face generation that is currently **under development**.
 + By using this class you can see the feature map of each layer in the neural network.
 
@@ -13,7 +11,7 @@ If you are interested in how this example works, you can take a look at the mode
 
 In summary, this **is just an example of how this class shows the feature maps of each layer of the model**.
 
-## how to use
+# How to get started
 
 + The goal is to transform the output features into images by loading the trained **caffe** neural network model.
 + You need [caffe](https://github.com/BVLC/caffe/) and [opencv](https://github.com/opencv/opencv) environments to use this class.
