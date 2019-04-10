@@ -1,6 +1,6 @@
 # FaceGenerator
 
-A **c++ class** for face generation or getting the feature map in any layer of the neural network which is currently **under development**.
+A little **c++ class** for face generation or getting the feature map in any layer of the neural network which is currently **under development**.
 
 By using this class you can see the **feature map** of each layer in the neural network.
 
