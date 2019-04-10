@@ -15,6 +15,7 @@ FaceGenerator::FaceGenerator(std::string modelFile, std::string trainedFile) {
 	this->input_layer = this->net->input_blobs()[0];
 
 	this->scale = 0.0078125;
+
 	this->meanValue = { 127.5, 127.5, 127.5 };
 }
 
@@ -24,7 +25,7 @@ FaceGenerator::~FaceGenerator() {
 }
 
 
-std::vector<cv::Mat> FaceGenerator::generateFace(cv::Mat img, std::vector<std::string> &layerNames) {
+std::unordered_map<std::string, std::vector<cv::Mat>> FaceGenerator::generateFace(cv::Mat img, std::vector<std::string> &layerNames) {
 	//clean featureMaps
 	this->featureMaps.clear();
 
@@ -41,7 +42,7 @@ std::vector<cv::Mat> FaceGenerator::generateFace(cv::Mat img, std::vector<std::s
 	//resize to input layer size
 	cv::resize(img, tImg, cv::Size(input_layer->width(), input_layer->height()));
 	dt.Transform(tImg, input_layer);
-	
+
 	//feature extract
 	this->net->ForwardFrom(0);
 
@@ -53,11 +54,11 @@ std::vector<cv::Mat> FaceGenerator::generateFace(cv::Mat img, std::vector<std::s
 		float *feat = new float[length];
 
 #ifdef FGDEBUG
-		std::cout << "layer" << " : " << i << std::endl;
-		std::cout << "channels" << " : " << tmpLayer->channels() << std::endl;
-		std::cout << "width" << " : " << tmpLayer->width() << std::endl;
-		std::cout << "height" << " : " << tmpLayer->height() << std::endl;
-		std::cout << "data length" << " : " << length << std::endl;
+		std::cout << "[layer" << " : " << layerNames[i] << "]"<<std::endl;
+		std::cout << "channels" << " : " << tmpLayer->channels();
+		std::cout << " | width" << " : " << tmpLayer->width();
+		std::cout << " | height" << " : " << tmpLayer->height();
+		std::cout << " | data length" << " : " << length << std::endl << std::endl;
 #endif
 
 		const float *end = tmpLayer->cpu_data() + length;
@@ -74,40 +75,62 @@ std::vector<cv::Mat> FaceGenerator::generateFace(cv::Mat img, std::vector<std::s
 #endif
 
 		//trans result to Mat
-		cv::Mat dst = transToMat(feat, length, tmpLayer);
-		this->featureMaps.push_back(dst);
+		std::vector<cv::Mat> dst = transToMat(feat, length, tmpLayer);
+		this->featureMaps.insert({ layerNames[i], dst });
 		delete feat;
 	}
 	return this->featureMaps;
 }
 
 
-std::vector<cv::Mat> FaceGenerator::generateFace(std::string imgPath, std::vector<std::string> &layerNames){
+std::unordered_map<std::string, std::vector<cv::Mat>> FaceGenerator::generateFace(std::string imgPath, std::vector<std::string> &layerNames){
 	cv::Mat img = cv::imread(imgPath);
 	return this->generateFace(img, layerNames);
 }
 
 
-cv::Mat FaceGenerator::transToMat(float* feat, int length, caffe::Blob<float> *layer) {
+std::vector<cv::Mat> FaceGenerator::transToMat(float* feat, int length, caffe::Blob<float> *layer) {
 
 	//trans float32* to Mat
 	//data index in memeory : (n * K + k) * H + h) * W + w
 	//n : img numbers; k : channels; h : height, w:width;
-	//if channels > 3 then set K = 3
-	int K = layer->channels() > 3 ? 3 : layer->channels();
+	int K = layer->channels();
 	int H = layer->height();
 	int W = layer->width();
 
-	cv::Mat res = cv::Mat::zeros(H, W, CV_8UC3);
+	std::vector<cv::Mat> res;
 
 	for (int k = 0; k < K; k++){
+		//save each Channel's featureMap
+		cv::Mat tmp = cv::Mat::zeros(H, W, CV_8UC1);
 		for (int h = 0; h < H; h++) {
 			for (int w = 0; w < W; w++) {
 				//trans float to 0-255
-				int val = (int)(*(feat + (k * H + h) * W + w) * 72.5 + 125.0);
-				res.at<cv::Vec3b>(h, w)[k] = val;
+				float fea = *(feat + (k * H + h) * W + w);
+				int val = (int)((fea + 1) * 127.5);
+				if (val > 255) val = 255;
+				if (val <= 0) val = 0;
+				tmp.at<uchar>(h, w) = val;
 			}
 		}
+		res.push_back(tmp);
+	}
+
+	if (3 == K){
+		//save 3-Channel featureMap Singly
+		cv::Mat tmp = cv::Mat::zeros(H, W, CV_8UC3);
+		for (int k = 0; k < K; k++){
+			for (int h = 0; h < H; h++) {
+				for (int w = 0; w < W; w++) {
+					float fea = *(feat + (k * H + h) * W + w);
+					int val = (int)((fea + 1) * 127.5) ;
+					if (val > 255) val = 255;
+					if (val <= 0) val = 0;
+					tmp.at<cv::Vec3b>(h, w)[k] = val;
+				}
+			}
+		}
+		res.push_back(tmp);
 	}
 
 	return res;
@@ -133,6 +156,6 @@ float FaceGenerator::getScale() const {
 	return this->scale;
 }
 
-std::vector<cv::Mat> FaceGenerator::getFeatureMaps() const {
+std::unordered_map<std::string, std::vector<cv::Mat>> FaceGenerator::getFeatureMaps() const {
 	return this->featureMaps;
 }

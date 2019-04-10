@@ -4,38 +4,32 @@
 + The goal is to transform the output features into face images by loading the trained **caffe** neural network model.
 + You need [caffe](https://github.com/BVLC/caffe/) and [opencv](https://github.com/opencv/opencv) environments to use this class.
 
-code example:
+using example:
 
 ```cpp
 #include "FaceGenerator.h"
 
 	...
+	FaceGenerator *faceGenerator = new FaceGenerator("model/Model_G.prototxt", "model/Model_G.caffemodel");
+	std::vector<std::string> layerNames = {"data","conv0_1", "conv1_1_new", "conv_decode1_1_new", "reconstruction_new"};
 	
-	//set up faceGenerator
-	FaceGenerator *faceGenerator = new FaceGenerator("model/model_v2-r50-symbol.prototxt", "model/model_v2-r50-symbol.caffemodel");
-
-	std::vector<std::string> layerNames = { "data", "stage3_unit1_conv1", "stage3_unit1_conv2" };
-	
-	//generate img via cv::Mat
-	cv::Mat faceImg, genImg;
-	faceImg = cv::imread("faceimg/face.jpg");
-	cv::imshow("faceImg", faceImg);
-
-	genImg = faceGenerator->generateFace(faceImg, layerNames)[0];
-	imshow("genImg", genImg);
-
-	//generate img via abs-path
-	std::vector<cv::Mat> genImgs;
-	genImgs = faceGenerator->generateFace("faceimg/face2.jpg", layerNames);
-	for (int i = 0; i < genImgs.size(); i++) {
-		imshow("gen " + layerNames[i], genImgs[i]);
-	}
-	
+	cv::Mat faceImg, inputImg, genImg;
+	faceImg = cv::imread("faceimg/182701.png");
+	faceGenerator->generateFace(faceImg, layerNames);
+	auto genImgs = faceGenerator->getFeatureMaps(); //auto here = std::unordered_map<std::string, std::vector<cv::Mat>>
+	//if feature channels == 3, You can get a three-channel RGB Mat object in hashMap[name][3]
+	cv::imshow("genImg", genImgs["data"][3]);
 	...
 	
 	
 ```
 
-result:
+By using this class you can see the feature map of each layer in the neural network.
+
+Here's an example of running on [G_Model](https://github.com/Yijunmaverick/GenerativeFaceCompletion):
 
 ![featureMap](https://github.com/somone23412/FaceGenerator/blob/master/image/featureMap.jpg)
+
+If you are interested in how this example works, you can take a look at the model author's [matlab code](https://github.com/Yijunmaverick/GenerativeFaceCompletion/tree/master/matlab/FaceCompletion_testing), I just reproduce it in c++.
+
+In summary, this **is just an example of how this class shows the feature maps of each layer of the model**.

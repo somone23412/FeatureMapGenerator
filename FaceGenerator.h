@@ -8,6 +8,7 @@
 
 #include <vector>
 #include <string>
+#include <unordered_map>
 
 
 class FaceGenerator {
@@ -20,13 +21,13 @@ public:
 
 	std::vector<float> getMeanValue() const;
 	float getScale() const;
-	std::vector<cv::Mat> getFeatureMaps() const;
+	std::unordered_map<std::string, std::vector<cv::Mat>> getFeatureMaps() const;
 
-	std::vector<cv::Mat> generateFace(cv::Mat img, std::vector<std::string> &layerNames);
-	std::vector<cv::Mat> generateFace(std::string imgPath, std::vector<std::string> &layerNames);
+	std::unordered_map<std::string, std::vector<cv::Mat>> generateFace(cv::Mat img, std::vector<std::string> &layerNames);
+	std::unordered_map<std::string, std::vector<cv::Mat>> generateFace(std::string imgPath, std::vector<std::string> &layerNames);
 
 private:
-	cv::Mat transToMat(float* feat, int length, caffe::Blob<float> *layer);
+	std::vector<cv::Mat> transToMat(float* feat, int length, caffe::Blob<float> *layer);
 
 private:
 	caffe::Net<float> *net;
@@ -36,6 +37,6 @@ private:
 	std::vector<float> meanValue;
 
 	std::vector<std::string> layerNames;
-	std::vector<cv::Mat> featureMaps;
+	std::unordered_map<std::string, std::vector<cv::Mat>> featureMaps;
 };
 
