@@ -25,10 +25,10 @@ You need [caffe](https://github.com/BVLC/caffe/) and [opencv](https://github.com
 	FaceGenerator *faceGenerator = new FaceGenerator("model/Model_G.prototxt", "model/Model_G.caffemodel");
 	std::vector<std::string> layerNames = {"data","conv0_1", "conv1_1_new", "conv_decode1_1_new", "reconstruction_new"};
 	
-	cv::Mat faceImg, inputImg, genImg;
+	cv::Mat faceImg;
 	faceImg = cv::imread("faceimg/182701.png");
 	faceGenerator->generateFace(faceImg, layerNames);
-	auto genImgs = faceGenerator->getFeatureMaps(); //auto here = std::unordered_map<std::string, std::vector<cv::Mat>>
+	auto genImgs = faceGenerator->getFeatureMaps(); //"auto" here = std::unordered_map<std::string, std::vector<cv::Mat>>
 	//if feature channels == 3, You can get a three-channel RGB Mat object in hashMap[name][3]
 	cv::imshow("genImg", genImgs["data"][3]);
 	...
