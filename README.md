@@ -1,9 +1,10 @@
 # FaceGenerator
 
-+ A c++ class for face generation that is currently **under development**.
-+ By using this class you can see the feature map of each layer in the neural network.
+A **c++ class** for face generation that is currently **under development**.
 
-Here's an example running on [G_Model](https://github.com/Yijunmaverick/GenerativeFaceCompletion):
+By using this class you can see the feature map of each layer in the neural network.
+
++ Here's an example running on [G_Model](https://github.com/Yijunmaverick/GenerativeFaceCompletion):
 
 ![featureMap](https://github.com/somone23412/FaceGenerator/blob/master/image/featureMap.jpg)
 
@@ -13,10 +14,11 @@ In summary, this **is just an example of how this class shows the feature maps o
 
 # How to get started
 
-+ The goal is to transform the output features into images by loading the trained **caffe** neural network model.
-+ You need [caffe](https://github.com/BVLC/caffe/) and [opencv](https://github.com/opencv/opencv) environments to use this class.
+The goal is to transform the output features into images by loading the trained **caffe** neural network model.
 
-using example:
+You need [caffe](https://github.com/BVLC/caffe/) and [opencv](https://github.com/opencv/opencv) environments to use this class.
+
++ using example:
 
 ```cpp
 #include "FaceGenerator.h"
