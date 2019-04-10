@@ -3,7 +3,7 @@
 + A c++ class for face generation that is currently **under development**.
 + By using this class you can see the feature map of each layer in the neural network.
 
-Here's an example of running on [G_Model](https://github.com/Yijunmaverick/GenerativeFaceCompletion):
+Here's an example running on [G_Model](https://github.com/Yijunmaverick/GenerativeFaceCompletion):
 
 ![featureMap](https://github.com/somone23412/FaceGenerator/blob/master/image/featureMap.jpg)
 
