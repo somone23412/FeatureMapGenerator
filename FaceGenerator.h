@@ -27,7 +27,7 @@ public:
 	std::unordered_map<std::string, std::vector<cv::Mat>> generateFace(std::string imgPath, std::vector<std::string> &layerNames);
 
 private:
-	std::vector<cv::Mat> transToMat(float* feat, int length, caffe::Blob<float> *layer);
+	std::vector<cv::Mat> transToMat(float* feat, caffe::Blob<float> *layer);
 
 private:
 	caffe::Net<float> *net;

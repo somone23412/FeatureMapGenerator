@@ -75,8 +75,9 @@ std::unordered_map<std::string, std::vector<cv::Mat>> FaceGenerator::generateFac
 #endif
 
 		//trans result to Mat
-		std::vector<cv::Mat> dst = transToMat(feat, length, tmpLayer);
+		std::vector<cv::Mat> dst = transToMat(feat, tmpLayer);
 		this->featureMaps.insert({ layerNames[i], dst });
+
 		delete feat;
 	}
 	return this->featureMaps;
@@ -89,7 +90,7 @@ std::unordered_map<std::string, std::vector<cv::Mat>> FaceGenerator::generateFac
 }
 
 
-std::vector<cv::Mat> FaceGenerator::transToMat(float* feat, int length, caffe::Blob<float> *layer) {
+std::vector<cv::Mat> FaceGenerator::transToMat(float* feat, caffe::Blob<float> *layer) {
 
 	//trans float32* to Mat
 	//data index in memeory : (n * K + k) * H + h) * W + w
