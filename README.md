@@ -2,15 +2,13 @@
 
 A **c++ class** for face generation that is currently **under development**.
 
-By using this class you can see the feature map of each layer in the neural network.
+By using this class you can see the **feature map** of each layer in the neural network.
 
 + Here's an example running on [G_Model](https://github.com/Yijunmaverick/GenerativeFaceCompletion):
 
 ![featureMap](https://github.com/somone23412/FaceGenerator/blob/master/image/featureMap.jpg)
 
 If you are interested in how this example works, you can take a look at the model author's [matlab code](https://github.com/Yijunmaverick/GenerativeFaceCompletion/tree/master/matlab/FaceCompletion_testing), I just reproduce it in c++.
-
-In summary, this **is just an example of how this class shows the feature maps of each layer of the model**.
 
 # How to get started
 
