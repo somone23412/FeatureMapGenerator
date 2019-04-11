@@ -1,6 +1,6 @@
 # FaceGenerator
 
-A little **c++ class** for face generation or getting the feature map in any layer of the neural network, which is currently **under development**.
+A little **c++ class** for face generation or getting the feature map in any layer of the neural network.
 
 By using this class you can see the **feature map** of each layer in the neural network.
 
@@ -31,6 +31,7 @@ You need [caffe](https://github.com/BVLC/caffe/) and [opencv](https://github.com
 	auto genImgs = faceGenerator->getFeatureMaps(); //"auto" here = std::unordered_map<std::string, std::vector<cv::Mat>>
 	//if feature channels == 3, You can get a three-channel RGB Mat object in hashMap[name][3]
 	cv::imshow("genImg", genImgs["data"][3]);
+	delete faceGenerator;
 	...
 	
 	
