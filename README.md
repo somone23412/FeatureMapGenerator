@@ -1,6 +1,6 @@
 # FaceGenerator
 
-A little **c++ class** for face image generation or getting the feature map in any layer of the neural network.
+A little **c++ class** for face image generation or getting the feature map in any layer of the neural network by loading the trained **caffe** model.
 
 By using this class you can see the **feature map** of each layer in the neural network.
 
@@ -12,9 +12,7 @@ This example is mainly used to show what the generated feature map looks like. I
 
 # Getting start
 
-The goal is to transform the output features into images by loading the trained **caffe** neural network model.
-
-You need [caffe](https://github.com/BVLC/caffe/) and [opencv](https://github.com/opencv/opencv) environments to use this class("caffexxx.h" included in FceGenerator.cpp is only for caffe-layer register, not a part of this class indeed).
+You need [caffe](https://github.com/BVLC/caffe/) and [opencv](https://github.com/opencv/opencv) environments to use this class ("caffexxx.h" included in FceGenerator.cpp is only for caffe-layer register, not a part of this class indeed).
 
 + using example:
 
