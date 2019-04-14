@@ -98,7 +98,7 @@ Destroys the generator.
 
 ###### func_3
 
-### void FeatureMapGenerator::[setMeanValue](func_3)(std::vector<float> &meanValue) 
+### void FeatureMapGenerator::[setMeanValue](#func_3)(std::vector<float> &meanValue) 
 
 Sets the meanValue to *meanValue*.
 
@@ -108,7 +108,7 @@ Sets the meanValue to *meanValue*.
 
 ###### func_4
 
-### void FeatureMapGenerator::[setScale](func_4)(float scale)
+### void FeatureMapGenerator::[setScale](#func_4)(float scale)
 
 Sets the scale to *scale*.
 
@@ -118,7 +118,7 @@ Sets the scale to *scale*.
 
 ###### func_5
 
-### std::vector<float> FeatureMapGenerator::[getMeanValue](func_5)() const
+### std::vector<float> FeatureMapGenerator::[getMeanValue](#func_5)() const
 
 returns the meanValue.
 
@@ -128,7 +128,7 @@ returns the meanValue.
 
 ###### func_6
 
-### float FeatureMapGenerator::[getScale](func_6)() const
+### float FeatureMapGenerator::[getScale](#func_6)() const
 
 returns the scale.
 
@@ -138,7 +138,7 @@ returns the scale.
 
 ###### func_7
 
-### std::unordered_map\<std::string, std::vector\<cv::Mat\>\> FeatureMapGenerator::[getFeatureMaps](func_7)() const 
+### std::unordered_map\<std::string, std::vector\<cv::Mat\>\> FeatureMapGenerator::[getFeatureMaps](#func_7)() const 
 
 returns the featureMaps.
 
@@ -146,7 +146,7 @@ returns the featureMaps.
 
 ###### func_8
 
-### std::unordered_map\<std::string, std::vector\<cv::Mat\>\> FeatureMapGenerator::[generateFeatureMaps](func_8)(cv::Mat img, std::vector\<std::string\> &layerNames)
+### std::unordered_map\<std::string, std::vector\<cv::Mat\>\> FeatureMapGenerator::[generateFeatureMaps](#func_8)(cv::Mat img, std::vector\<std::string\> &layerNames)
 
 +1 overloads.
 
@@ -154,13 +154,13 @@ Get the img from cv::Mat and forward the neural network, save the feature map of
 
 returns the featureMaps.
 
-**See also** [generateFeatureMaps()](func_9).
+**See also** [generateFeatureMaps()](#func_9).
 
 ###### func_9
 
 ---
 
-### std::unordered_map\<std::string, std::vector\<cv::Mat\>\> FeatureMapGenerator::[generateFeatureMaps](func_9)(std::string imgPath, std::vector\<std::string\> &layerNames)
+### std::unordered_map\<std::string, std::vector\<cv::Mat\>\> FeatureMapGenerator::[generateFeatureMaps](#func_9)(std::string imgPath, std::vector\<std::string\> &layerNames)
 
 +1 overloads.
 
@@ -168,4 +168,4 @@ Get the img from file and forward the neural network, save the feature map of ea
 
 returns the featureMaps.
 
-**See also** [generateFeatureMaps()](func_8).
+**See also** [generateFeatureMaps()](#func_8).
