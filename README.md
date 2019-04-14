@@ -1,8 +1,8 @@
-# FaceGenerator
+# FeatureMapGenerator
 
-A little **c++ class** for face image generation or getting the feature map in any layer of the neural network by loading the trained **caffe** model.
+A little **c++ class** for getting the feature maps in any layer of the neural network by loading the trained **caffe** model.
 
-By using this class you can see the **feature map** of each layer in the neural network.
+By using this class you can see the **feature maps** of each layer in the neural network.
 
 + Here's an example running on [G_Model](https://github.com/Yijunmaverick/GenerativeFaceCompletion):
 
@@ -17,19 +17,19 @@ You need [caffe](https://github.com/BVLC/caffe/) and [opencv](https://github.com
 + using example:
 
 ```cpp
-#include "FaceGenerator.h"
+#include "FeatureMapGenerator.h"
 
 	...
-	FaceGenerator *faceGenerator = new FaceGenerator("model/Model_G.prototxt", "model/Model_G.caffemodel");
+	FeatureMapGenerator *featureMapGenerator = new FeatureMapGenerator("model/Model_G.prototxt", "model/Model_G.caffemodel");
 	std::vector<std::string> layerNames = {"data","conv0_1", "conv1_1_new", "conv_decode1_1_new", "reconstruction_new"};
 	
 	cv::Mat faceImg;
 	faceImg = cv::imread("faceimg/182701.png");
-	faceGenerator->generateFace(faceImg, layerNames);
-	auto genImgs = faceGenerator->getFeatureMaps(); //"auto" here = std::unordered_map<std::string, std::vector<cv::Mat>>
+	featureMapGenerator->generateFace(faceImg, layerNames);
+	auto genImgs = featureMapGenerator->getFeatureMaps(); //"auto" here = std::unordered_map<std::string, std::vector<cv::Mat>>
 	//if feature channels == 3, You can get a three-channel RGB Mat object in hashMap[name][3]
 	cv::imshow("genImg", genImgs["data"][3]);
-	delete faceGenerator;
+	delete featureMapGenerator;
 	...
 	
 	
