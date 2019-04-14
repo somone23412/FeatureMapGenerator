@@ -82,7 +82,7 @@ std::unordered_map\<std::string, std::vector\<cv::Mat\>\> [generateFeatureMaps](
 
 ###### func_1
 
-#### FeatureMapGenerator::**FeatureMapGenerator**(std::string modelFile, std::string trainedFile)
+### FeatureMapGenerator::[FeatureMapGenerator](#func_1)(std::string modelFile, std::string trainedFile)
 
 Constructs a [FeatureMapGenerator](#FeatureMapGenerator-class) and loads the trained caffe model.
 
@@ -90,7 +90,7 @@ Constructs a [FeatureMapGenerator](#FeatureMapGenerator-class) and loads the tra
 
 ###### func_2
 
-#### FeatureMapGenerator::**~FeatureMapGenerator**()
+### FeatureMapGenerator::[~FeatureMapGenerator](#func_2)()
 
 Destroys the generator.
 
@@ -98,7 +98,7 @@ Destroys the generator.
 
 ###### func_3
 
-#### void FeatureMapGenerator::**setMeanValue**(std::vector<float> &meanValue) 
+### void FeatureMapGenerator::[setMeanValue](func_3)(std::vector<float> &meanValue) 
 
 Sets the meanValue to *meanValue*.
 
@@ -108,7 +108,7 @@ Sets the meanValue to *meanValue*.
 
 ###### func_4
 
-#### void FeatureMapGenerator::**setScale**(float scale)
+### void FeatureMapGenerator::[setScale](func_4)(float scale)
 
 Sets the scale to *scale*.
 
@@ -118,7 +118,7 @@ Sets the scale to *scale*.
 
 ###### func_5
 
-#### std::vector<float> FeatureMapGenerator::**getMeanValue**() const
+### std::vector<float> FeatureMapGenerator::[getMeanValue](func_5)() const
 
 returns the meanValue.
 
@@ -128,7 +128,7 @@ returns the meanValue.
 
 ###### func_6
 
-#### float FeatureMapGenerator::**getScale**() const
+### float FeatureMapGenerator::[getScale](func_6)() const
 
 returns the scale.
 
@@ -138,7 +138,7 @@ returns the scale.
 
 ###### func_7
 
-#### std::unordered_map\<std::string, std::vector\<cv::Mat\>\> FeatureMapGenerator::**getFeatureMaps**() const 
+### std::unordered_map\<std::string, std::vector\<cv::Mat\>\> FeatureMapGenerator::[getFeatureMaps](func_7)() const 
 
 returns the featureMaps.
 
@@ -146,7 +146,7 @@ returns the featureMaps.
 
 ###### func_8
 
-#### std::unordered_map\<std::string, std::vector\<cv::Mat\>\> FeatureMapGenerator::**generateFeatureMaps**(cv::Mat img, std::vector\<std::string\> &layerNames)
+### std::unordered_map\<std::string, std::vector\<cv::Mat\>\> FeatureMapGenerator::[generateFeatureMaps](func_8)(cv::Mat img, std::vector\<std::string\> &layerNames)
 
 +1 overloads.
 
@@ -160,7 +160,7 @@ returns the featureMaps.
 
 ---
 
-#### std::unordered_map\<std::string, std::vector\<cv::Mat\>\> FeatureMapGenerator::**generateFeatureMaps**(std::string imgPath, std::vector\<std::string\> &layerNames)
+### std::unordered_map\<std::string, std::vector\<cv::Mat\>\> FeatureMapGenerator::[generateFeatureMaps](func_9)(std::string imgPath, std::vector\<std::string\> &layerNames)
 
 +1 overloads.
 
