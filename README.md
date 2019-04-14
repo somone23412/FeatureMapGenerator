@@ -58,23 +58,17 @@ None
 
 ### PublicFunctions
 
-[FeatureMapGenerator](#func_1)(std::string modelFile, std::string trainedFile)
-
-[~FeatureMapGenerator](#func_2)()
-
-void [setMeanValue](#func_3)(std::vector\<float\> &meanValue)
-
-void [setScale](#func_4)(float scale)
-
-std::vector\<float\> [getMeanValue](#func_5)() const
-
-float [getScale](#func_6)() const
-
-std::unordered_map\<std::string, std::vector\<cv::Mat\>\> [getFeatureMaps](#func_7)() const
-
-std::unordered_map\<std::string, std::vector\<cv::Mat\>\> [generateFeatureMaps](#func_8)(cv::Mat img, std::vector\<std::string\> &layerNames)
-
-std::unordered_map\<std::string, std::vector\<cv::Mat\>\> [generateFeatureMaps](#func_9)(std::string imgPath, std::vector\<std::string\> &layerNames)
+| returns | functions |
+| --- | --- |
+||[FeatureMapGenerator](#func_1)(std::string modelFile, std::string trainedFile)|
+||[~FeatureMapGenerator](#func_2)()|
+|void|[setMeanValue](#func_3)(std::vector\<float\> &meanValue)|
+|void|[setScale](#func_4)(float scale)|
+|std::vector\<float\>|[getMeanValue](#func_5)() const|
+|float| [getScale](#func_6)() const|
+|std::unordered_map\<std::string, std::vector\<cv::Mat\>\>|[getFeatureMaps](#func_7)() const|
+|std::unordered_map\<std::string, std::vector\<cv::Mat\>\>|[generateFeatureMaps](#func_8)(cv::Mat img, std::vector\<std::string\> &layerNames)|
+|std::unordered_map\<std::string, std::vector\<cv::Mat\>\>|[generateFeatureMaps](#func_9)(std::string imgPath, std::vector\<std::string\> &layerNames)|
 
 ### Member Function Documentation
 
