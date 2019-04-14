@@ -1,14 +1,12 @@
-#include "stdafx.h"
-#include "FaceGenerator.h"
-//for caffe layer registe
-#include "caffexxx.h"
+//#include "stdafx.h"
+#include "FeatureMapGenerator.h"
 
 
 #define FGDEBUG
 //#define SHOW_FEATURE
 
 
-FaceGenerator::FaceGenerator(std::string modelFile, std::string trainedFile) {
+FeatureMapGenerator::FeatureMapGenerator(std::string modelFile, std::string trainedFile) {
 	this->net = new caffe::Net<float>(modelFile, caffe::TEST);
 	this->net->CopyTrainedLayersFrom(trainedFile);
 
@@ -20,12 +18,12 @@ FaceGenerator::FaceGenerator(std::string modelFile, std::string trainedFile) {
 }
 
 
-FaceGenerator::~FaceGenerator() {
+FeatureMapGenerator::~FeatureMapGenerator() {
 	delete this->net;
 }
 
 
-std::unordered_map<std::string, std::vector<cv::Mat>> FaceGenerator::generateFace(cv::Mat img, std::vector<std::string> &layerNames) {
+std::unordered_map<std::string, std::vector<cv::Mat>> FeatureMapGenerator::generateFace(cv::Mat img, std::vector<std::string> &layerNames) {
 	//clean featureMaps
 	this->featureMaps.clear();
 
@@ -84,13 +82,13 @@ std::unordered_map<std::string, std::vector<cv::Mat>> FaceGenerator::generateFac
 }
 
 
-std::unordered_map<std::string, std::vector<cv::Mat>> FaceGenerator::generateFace(std::string imgPath, std::vector<std::string> &layerNames){
+std::unordered_map<std::string, std::vector<cv::Mat>> FeatureMapGenerator::generateFace(std::string imgPath, std::vector<std::string> &layerNames){
 	cv::Mat img = cv::imread(imgPath);
 	return this->generateFace(img, layerNames);
 }
 
 
-std::vector<cv::Mat> FaceGenerator::transToMat(float* feat, caffe::Blob<float> *layer) {
+std::vector<cv::Mat> FeatureMapGenerator::transToMat(float* feat, caffe::Blob<float> *layer) {
 
 	//trans float32* to Mat
 	//data index in memeory : (n * K + k) * H + h) * W + w
@@ -138,25 +136,25 @@ std::vector<cv::Mat> FaceGenerator::transToMat(float* feat, caffe::Blob<float> *
 }
 
 
-void FaceGenerator::setMeanValue(std::vector<float> &meanValue) {
+void FeatureMapGenerator::setMeanValue(std::vector<float> &meanValue) {
 	this->meanValue = meanValue;
 }
 
 
-void FaceGenerator::setScale(float scale) {
+void FeatureMapGenerator::setScale(float scale) {
 	this->scale = scale;
 }
 
 
-std::vector<float> FaceGenerator::getMeanValue() const {
+std::vector<float> FeatureMapGenerator::getMeanValue() const {
 	return this->meanValue;
 }
 
 
-float FaceGenerator::getScale() const {
+float FeatureMapGenerator::getScale() const {
 	return this->scale;
 }
 
-std::unordered_map<std::string, std::vector<cv::Mat>> FaceGenerator::getFeatureMaps() const {
+std::unordered_map<std::string, std::vector<cv::Mat>> FeatureMapGenerator::getFeatureMaps() const {
 	return this->featureMaps;
 }

@@ -11,10 +11,10 @@
 #include <unordered_map>
 
 
-class FaceGenerator {
+class FeatureMapGenerator {
 public:
-	FaceGenerator(std::string modelFile, std::string trainedFile);
-	~FaceGenerator();
+	FeatureMapGenerator(std::string modelFile, std::string trainedFile);
+	~FeatureMapGenerator();
 
 	void setMeanValue(std::vector<float> &meanValue);
 	void setScale(float scale);
