@@ -1,4 +1,4 @@
-//#include "stdafx.h"
+//include "stdafx.h"
 #include "FeatureMapGenerator.h"
 
 
@@ -23,7 +23,7 @@ FeatureMapGenerator::~FeatureMapGenerator() {
 }
 
 
-std::unordered_map<std::string, std::vector<cv::Mat>> FeatureMapGenerator::generateFace(cv::Mat img, std::vector<std::string> &layerNames) {
+std::unordered_map<std::string, std::vector<cv::Mat>> FeatureMapGenerator::generateFeatureMaps(cv::Mat img, std::vector<std::string> &layerNames) {
 	//clean featureMaps
 	this->featureMaps.clear();
 
@@ -82,9 +82,9 @@ std::unordered_map<std::string, std::vector<cv::Mat>> FeatureMapGenerator::gener
 }
 
 
-std::unordered_map<std::string, std::vector<cv::Mat>> FeatureMapGenerator::generateFace(std::string imgPath, std::vector<std::string> &layerNames){
+std::unordered_map<std::string, std::vector<cv::Mat>> FeatureMapGenerator::generateFeatureMaps(std::string imgPath, std::vector<std::string> &layerNames){
 	cv::Mat img = cv::imread(imgPath);
-	return this->generateFace(img, layerNames);
+	return this->generateFeatureMaps(img, layerNames);
 }
 
 

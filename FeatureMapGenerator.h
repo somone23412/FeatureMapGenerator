@@ -23,8 +23,8 @@ public:
 	float getScale() const;
 	std::unordered_map<std::string, std::vector<cv::Mat>> getFeatureMaps() const;
 
-	std::unordered_map<std::string, std::vector<cv::Mat>> generateFace(cv::Mat img, std::vector<std::string> &layerNames);
-	std::unordered_map<std::string, std::vector<cv::Mat>> generateFace(std::string imgPath, std::vector<std::string> &layerNames);
+	std::unordered_map<std::string, std::vector<cv::Mat>> generateFeatureMaps(cv::Mat img, std::vector<std::string> &layerNames);
+	std::unordered_map<std::string, std::vector<cv::Mat>> generateFeatureMaps(std::string imgPath, std::vector<std::string> &layerNames);
 
 private:
 	std::vector<cv::Mat> transToMat(float* feat, caffe::Blob<float> *layer);
