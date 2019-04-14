@@ -35,7 +35,7 @@ You need [caffe](https://github.com/BVLC/caffe/) and [opencv](https://github.com
 	
 ```
 
-#Documentation
+# Documentation
 FeatureMapGenerator class Documentation.
 
 ## Contents
@@ -44,7 +44,7 @@ FeatureMapGenerator class Documentation.
 + [PublicFunctions](#PublicFunctions)
 
 ## FeatureMapGenerator Class
-The [FeatureMapGenerator](#FeatureMapGenerator) class is used to getting the feature maps in any layer of the neural network by loading the trained caffe model.
+The [FeatureMapGenerator](#FeatureMapGenerator-class) class is used to getting the feature maps in any layer of the neural network by loading the trained caffe model.
 
 **Header:** \#include "FeatureMapGenerator.h"
 
@@ -78,25 +78,25 @@ std::unordered_map\<std::string, std::vector\<cv::Mat\>\> [generateFeatureMaps](
 
 ### Member Function Documentation
 
-###### func_1
-
 ---
+
+###### func_1
 
 #### FeatureMapGenerator::**FeatureMapGenerator**(std::string modelFile, std::string trainedFile)
 
 Constructs a [FeatureMapGenerator](#FeatureMapGenerator-class) and loads the trained caffe model.
 
-###### func_2
-
 ---
+
+###### func_2
 
 #### FeatureMapGenerator::**~FeatureMapGenerator**()
 
 Destroys the generator.
 
-###### func_3
-
 ---
+
+###### func_3
 
 #### void FeatureMapGenerator::**setMeanValue**(std::vector<float> &meanValue) 
 
@@ -104,9 +104,9 @@ Sets the meanValue to *meanValue*.
 
 **See also**  [getMeanValue()](#func_5).
 
-###### func_4
-
 ---
+
+###### func_4
 
 #### void FeatureMapGenerator::**setScale**(float scale)
 
@@ -114,9 +114,9 @@ Sets the scale to *scale*.
 
 **See also**  [getScale()](#func_6).
 
-###### func_5
-
 ---
+
+###### func_5
 
 #### std::vector<float> FeatureMapGenerator::**getMeanValue**() const
 
@@ -124,9 +124,9 @@ returns the meanValue.
 
 **See also** [setMeanValue()](#func_3).
 
-###### func_6
-
 ---
+
+###### func_6
 
 #### float FeatureMapGenerator::**getScale**() const
 
@@ -134,17 +134,17 @@ returns the scale.
 
 **See also**  [setScale()](#func_4).
 
-###### func_7
-
 ---
+
+###### func_7
 
 #### std::unordered_map\<std::string, std::vector\<cv::Mat\>\> FeatureMapGenerator::**getFeatureMaps**() const 
 
 returns the featureMaps.
 
-###### func_8
-
 ---
+
+###### func_8
 
 #### std::unordered_map\<std::string, std::vector\<cv::Mat\>\> FeatureMapGenerator::**generateFeatureMaps**(cv::Mat img, std::vector\<std::string\> &layerNames)
 
