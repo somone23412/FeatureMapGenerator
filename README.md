@@ -4,7 +4,11 @@ A little **c++ class** for getting the feature maps in any layer of the neural n
 
 By using this class you can see the **feature maps** of each layer in the neural network.
 
-+ Here's an example running on [G_Model](https://github.com/Yijunmaverick/GenerativeFaceCompletion):
++ [Getting start](#Getting-start)
+
++ [Documentation](#Documentation)
+
+Here's an example running on [G_Model](https://github.com/Yijunmaverick/GenerativeFaceCompletion):
 
 ![featureMap](https://github.com/somone23412/FaceGenerator/blob/master/image/featureMap.jpg)
 
