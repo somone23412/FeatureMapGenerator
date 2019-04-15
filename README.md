@@ -1,5 +1,9 @@
 # FeatureMapGenerator
 
+[Getting start](#Getting-start)
+
+[Documentation](#Documentation)
+
 A little **c++ class** for getting the feature maps in any layer of the neural network by loading the trained **caffe** model.
 
 By using this class you can see the **feature maps** of each layer in the neural network.
