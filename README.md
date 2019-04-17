@@ -24,15 +24,26 @@ You need [caffe](https://github.com/BVLC/caffe/) and [opencv](https://github.com
 #include "FeatureMapGenerator.h"
 
 	...
+	//init generator, loading pre-trained caffe model.
 	FeatureMapGenerator *featureMapGenerator = new FeatureMapGenerator("model/Model_G.prototxt", "model/Model_G.caffemodel");
+	
+	//register layers you want to generate the feature maps.
 	std::vector<std::string> layerNames = {"data","conv0_1", "conv1_1_new", "conv_decode1_1_new", "reconstruction_new"};
 	
+	//load test image.
 	cv::Mat faceImg;
 	faceImg = cv::imread("faceimg/182701.png");
+	
+	//forward pass network, generate feature maps.
 	featureMapGenerator->generateFeatureMaps(faceImg, layerNames);
+	
+	//get feature maps, which saved as "HashMap<string, Mat[]>".
 	auto genImgs = featureMapGenerator->getFeatureMaps(); //"auto" here = std::unordered_map<std::string, std::vector<cv::Mat>>
-	//if feature channels == 3, You can get a three-channel RGB Mat object in hashMap[name][3]
+	
+	//if feature channels == 3, you can get a three-channel RGB Mat object in "hashMap[name][3]".
 	cv::imshow("genImg", genImgs["data"][3]);
+	
+	//destroy generator.
 	delete featureMapGenerator;
 	...
 	
