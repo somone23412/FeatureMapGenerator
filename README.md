@@ -27,12 +27,10 @@ You need [caffe](https://github.com/BVLC/caffe/) and [opencv](https://github.com
 	//init generator, loading pre-trained caffe model.
 	FeatureMapGenerator *featureMapGenerator = new FeatureMapGenerator("model/Model_G.prototxt", "model/Model_G.caffemodel");
 	
-	//register layers you want to generate the feature maps.
+	//Layers which you want to generate feature maps from.
 	std::vector<std::string> layerNames = {"data","conv0_1", "conv1_1_new", "conv_decode1_1_new", "reconstruction_new"};
-	
 	//load test image.
-	cv::Mat faceImg;
-	faceImg = cv::imread("faceimg/182701.png");
+	cv::Mat faceImg = cv::imread("faceimg/182701.png");
 	
 	//forward pass network, generate feature maps.
 	featureMapGenerator->generateFeatureMaps(faceImg, layerNames);
