@@ -1,4 +1,4 @@
-//include "stdafx.h"
+#include "stdafx.h"
 #include "FeatureMapGenerator.h"
 
 
@@ -122,10 +122,11 @@ std::vector<cv::Mat> FeatureMapGenerator::transToMat(float* feat, caffe::Blob<fl
 			for (int h = 0; h < H; h++) {
 				for (int w = 0; w < W; w++) {
 					float fea = *(feat + (k * H + h) * W + w);
-					int val = (int)((fea + 1) * 127.5) ;
+					int val = (int)((fea + 1) * 127.5);
 					if (val > 255) val = 255;
-					if (val <= 0) val = 0;
-					tmp.at<cv::Vec3b>(h, w)[k] = val;
+					if (val < 0) val = 0;
+					//OpenCV's default channels is bgr and what we needs is rgb
+					tmp.at<cv::Vec3b>(h, w)[2 - k] = val;
 				}
 			}
 		}
